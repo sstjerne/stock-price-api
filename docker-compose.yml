@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/stock_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - POLYGON_API_KEY=${POLYGON_API_KEY}
+    depends_on:
+      - postgres
+    networks:
+      - stock-network
+
+  postgres:
+    image: postgres:13-bullseye
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=stock_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - stock_db_postgres_data:/var/lib/postgresql/data
+    restart: always    
+    networks:
+      - stock-network
+
+networks:
+  stock-network:
+    driver: bridge
+    external: true
+
+volumes:
+  stock_db_postgres_data:
+    driver: local

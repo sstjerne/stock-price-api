@@ -23,7 +23,7 @@ A Spring Boot application that fetches and stores stock price data using the Pol
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd stock-api
+cd stock-price-api
 ```
 
 2. Set up environment variables:
